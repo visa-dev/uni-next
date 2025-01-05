@@ -11,6 +11,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        userCardColor1: "#C3EBFA",
+        userCardColor2: "#FAE27C",
+        girlIndicatorColor: "#FAE27C",
+        boyIndicatorColor: "#9fcdf8",
+        default1: '#C3EBFA',
+        default2:'#FAE27C'
       },
     },
   },
