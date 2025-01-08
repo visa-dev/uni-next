@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
-    basePath: '/',
+    basePath: '/app',
 };
 
 export default nextConfig;
