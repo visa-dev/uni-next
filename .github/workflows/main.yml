@@ -29,12 +29,4 @@ jobs:
 
       - name: Copy files to server
         run: |
-          rsync -avz --progress --delete --no-perms --no-owner ./ root@${{ secrets.SERVER_IP }}:/www/wwwroot/
-        env:
-          RSYNC_RSH: ssh
-
-      - name: Restart server (optional)
-        run: |
-          ssh root@${{ secrets.SERVER_IP }} "sudo systemctl restart apache2"
-        env:
-          RSYNC_RSH: ssh
+          scp -r ./ root@${{ secrets.SERVER_IP }}:/www/wwwroot/
