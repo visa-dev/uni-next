@@ -37,4 +37,4 @@ jobs:
         run: |
           ssh ubuntu@${{ secrets.SERVER_IP }} "sudo systemctl restart apache2"
         env:
-          RSYNC_RSH: ssh
+          RSYNC_RSH:  ssh
