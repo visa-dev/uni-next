@@ -29,4 +29,4 @@ jobs:
 
       - name: Copy files to server
         run: |
-          scp -r ./ root@${{ secrets.SERVER_IP }}:/www/wwwroot/
+          scp -r ./ root@${{ secrets.SERVER_IP }}:/www/wwwroot/visadev.run.place/
