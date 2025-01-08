@@ -1,0 +1,32 @@
+name: Deploy HTML Website via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SECRETKEY }}
+
+      - name: Copy files to server
+        run: |
+          rsync -avz --progress --delete ./ ubuntu@${{ secrets.SERVER_IP }}:/www/wwwroot/
+        env:
+          RSYNC_RSH: ssh
+
+      - name: Restart server (optional)
+        run: |
+          ssh ubuntu@${{ secrets.SERVER_IP }} "sudo systemctl restart apache2"
+        env:
+          RSYNC_RSH: ssh
