@@ -25,16 +25,16 @@ jobs:
 
       - name: Test SSH connection
         run: |
-          ssh ubuntu@${{ secrets.SERVER_IP }} "echo 'SSH connection successful!'"
+          ssh root@${{ secrets.SERVER_IP }} "echo 'SSH connection successful!'"
 
       - name: Copy files to server
         run: |
-          rsync -avz --progress --delete ./ ubuntu@${{ secrets.SERVER_IP }}:/www/wwwroot/
+          rsync -avz --progress --delete ./ root@${{ secrets.SERVER_IP }}:/www/wwwroot/
         env:
           RSYNC_RSH: ssh
 
       - name: Restart server (optional)
         run: |
-          ssh ubuntu@${{ secrets.SERVER_IP }} "sudo systemctl restart apache2"
+          ssh root@${{ secrets.SERVER_IP }} "sudo systemctl restart apache2"
         env:
           RSYNC_RSH:  ssh
