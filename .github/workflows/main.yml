@@ -27,6 +27,6 @@ jobs:
         run: |
           ssh root@${{ secrets.SERVER_IP }} "echo 'SSH connection successful!'"
 
-      - name: Copy files to server
+      - name: Copy build files to server
         run: |
           scp -r ./ root@${{ secrets.SERVER_IP }}:/www/wwwroot/visadev.run.place/
