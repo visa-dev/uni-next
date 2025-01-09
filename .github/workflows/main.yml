@@ -14,6 +14,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Node.js (or your build environment, e.g., npm/yarn if needed)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Adjust the version of Node.js (or other tool) you're using
+
+      - name: Install dependencies
+        run: |
+          npm install  # or use yarn install, depending on your project
+
+      - name: Build the project
+        run: |
+          npm next build  # Replace with the actual build command if needed
+
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
@@ -21,12 +34,17 @@ jobs:
 
       - name: Add server to known_hosts
         run: |
+          mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Test SSH connection
         run: |
-          ssh root@${{ secrets.SERVER_IP }} "echo 'SSH connection successful!'"
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "echo 'SSH connection successful!'"
 
       - name: Copy build files to server
         run: |
-          scp -r ./ root@${{ secrets.SERVER_IP }}:/www/wwwroot/visadev.run.place/
+          scp -r ./dist/* root@${{ secrets.SERVER_IP }}:/www/wwwroot/visadev.run.place/
+
+      - name: Cleanup SSH keys
+        run: |
+          ssh-keygen -R ${{ secrets.SERVER_IP }}
