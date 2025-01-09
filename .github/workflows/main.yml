@@ -14,18 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js (or your build environment, e.g., npm/yarn if needed)
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Adjust the version of Node.js (or other tool) you're using
+          node-version: '16'  # Adjust to your desired Node.js version
 
       - name: Install dependencies
         run: |
-          npm install  # or use yarn install, depending on your project
+          npm install  # Installs all dependencies from package.json
 
       - name: Build the project
         run: |
-          npm next build  # Replace with the actual build command if needed
+          npm run build  # Run the Next.js build command
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -43,7 +43,8 @@ jobs:
 
       - name: Copy build files to server
         run: |
-          scp -r ./dist/* root@${{ secrets.SERVER_IP }}:/www/wwwroot/visadev.run.place/
+          # Copy the build output (by default Next.js uses .next)
+          scp -r ./out/* root@${{ secrets.SERVER_IP }}:/www/wwwroot/visadev.run.place/
 
       - name: Cleanup SSH keys
         run: |
